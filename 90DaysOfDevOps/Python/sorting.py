@@ -8,3 +8,4 @@ for i in range(len(list_of_num)) :
             list_of_num[j] = temp
 
 print(list_of_num)
+

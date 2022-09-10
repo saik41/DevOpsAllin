@@ -1,0 +1,13 @@
+WARNING:root:this may break
+ERROR:root:this is an error,fix it
+CRITICAL:root:This is a critical error, fix it
+WARNING:root:this may break
+ERROR:root:this is an error,fix it
+CRITICAL:root:This is a critical error, fix it
+07/09/22 this may break
+07/09/22 this is an error,fix it
+07/09/22 This is a critical error, fix it
+07/09/22 07:17:31 PM this may break
+07/09/22 07:17:31 PM this is fine
+07/09/22 07:17:31 PM this is an error,fix it
+07/09/22 07:17:31 PM This is a critical error, fix it
