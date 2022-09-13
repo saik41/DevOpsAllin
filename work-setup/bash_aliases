@@ -1,0 +1,171 @@
+#kubernets aliases
+alias k="kubectl"
+alias kg="kubectl get"
+alias kgp="kubectl get pods"
+alias kdp="kubectl delete pods"
+alias kcc="kubectl config get-contexts"
+alias kcu="kubectl config use-context"
+alias kl="kubectl logs"
+alias sandbox="kubectl config use-context gke_amplified-bee-212211_us-central1_dev-sandbox"
+alias ops="kubectl config use-context gke_amplified-bee-212211_us-central1_ops-tweek"
+alias opsprod="kubectl config use-context gke_bright-cabinet_us-east1_ops-production"
+alias toothless="kubectl config use-context gke_amplified-bee-212211_us-central1_toothless"
+alias drone-nexus="kubectl config use-context gke_bright-cabinet_us-east1_drone-nexus"
+alias drone-apac="kubectl config use-context gke_bright-cabinet_asia-northeast3_drone-apac-nexus"
+alias nminus1="kubectl config use-context gke_bright-cabinet_us-east1_nminus1-nexus"
+
+#function to print logs 
+function logs ()
+{
+	pod=$(kubectl get pods | grep -i $1 | awk '{print $1}' | head -n 1 )
+	dep=$(kubectl get deployments | grep -i $1 | awk '{print $1}' | head -n 1)
+	kubectl logs -f $pod -c $dep $2 $3
+	notify-send "Logs $pod" "Reading Done"
+}
+
+#deleting pod
+function delete ()
+{
+	pod=$(kubectl get pods | grep -i "$1" | awk '{print $1}')
+	kubectl delete pod $pod
+	notify-send  "Deleted" "$pod"
+}
+#kubectl exec
+function exec ()
+{
+	pod=$(kubectl get pods | grep -i $1 | awk '{print $1}' | head -n 1)
+	kubectl exec -it $pod bash
+}
+
+
+#setting namespace of kubernetes clusters
+function kn()
+{
+	flag=0
+	current=$(kubectl config current-context)
+	namespaces=$(kubectl get namespaces)
+	for namespacename in ${namespaces[@]}
+	do
+		if [ $namespacename == $1 ]
+		then
+			kubectl config set-context $current --namespace=$1
+			flag=1
+			break;
+		fi
+	done
+	if [ $flag -eq 0 ]
+	then
+		echo "Enter namespace[$1] is not found in current context[$current]"
+	fi
+}
+
+function deploy()
+{
+	dep=$(kubectl get deploy | grep -i $1 | awk '{print $1}' | head -n 1)
+	kubectl edit deploy $dep
+}
+
+
+function cm()
+{
+	config=$(kubectl get cm | grep -i $1 | awk '{print $1}' | head -n 1)
+	kubectl edit cm $config
+}
+
+#git aliases
+alias branch="git branch"
+alias push="git push"
+alias commit="git commit"
+alias add="git add -u"
+alias pull="git pull"
+alias status="git status"
+alias diff="git diff"
+alias checkout="git checkout"
+
+#gcloud aliases
+
+
+alias gsandbox="gcloud container clusters get-credentials dev-sandbox --region us-central1 --project amplified-bee-212211"
+alias gdrone-nexus="gcloud container clusters get-credentials drone-nexus --region us-east1 --project bright-cabinet"
+alias gtoothless="gcloud container clusters get-credentials toothless --region us-central1 --project amplified-bee-212211"
+alias gops="gcloud container clusters get-credentials ops-tweek --region us-central1 --project amplified-bee-212211"
+alias gdrone-apac="gcloud container clusters get-credentials drone-apac-nexus --region asia-northeast3 --project bright-cabinet"
+alias authamp="gcloud config set account prince.kumar@privafy.com"
+alias authpro="gcloud config set account dev-debug@bright-cabinet.iam.gserviceaccount.com"
+
+#export PS1="\[\033[36m\]\u\[\033[m\]\[\033[32m\]\[\033[33;1m\]\w\[\033[m\](\$(git branch 2>/dev/null | grep '^*' | colrm 1 2))\$ "
+
+#export PS1="\[\e]0;\w\a\]${debian_chroot:+($debian_chroot)}\[\033[36m\]\u\[\033[m\]\[\033[32m\]\[\033[33;1m\]\w\[\033[m\](\$(git branch 2>/dev/null | grep '^*' | colrm 1 2)) \$ "
+export PS1="\[\e]0;\w\a\]${debian_chroot:+($debian_chroot)}\[\033[36m\]\u\[\033[m\]\[\033[32m\]\[\033[33;1m\]\w\[\033[m\]\$(git_branch)\$ "
+
+git_branch() {
+  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+#export PS1="\e[1m\e[32m\u@\h\e[0m\e[0m:\e[1m\e[34m\w\e[0m\e[1;33m\$(git_branch)\e[0m\$ "
+#export PS1="\e[033m\e[36m\u\e[0m\e[0m\e[1m\e[34m\w\e[0m\e[1;33m\$(git_branch)\e[0m\$ "
+
+#setting title in terminal
+function termtitle()
+{
+	PS1="${PS1/\\u@\\h: \\w/$@}";
+}
+
+#default 
+#export PS1 = "\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$"
+
+alias pnpac="/opt/appedge/bin/pnpac"
+#disconnecting the appedge
+function disconnect()
+{
+	x=$(ps -eaf | grep pnpac | awk '{print $2}'| head -n 1 )
+	y=$(ps -eaf | grep gappedge | awk '{print $2}'| head -n 1)
+	kill -2 $x $y
+}
+
+
+#contextdb connection
+function contextdb()
+{
+	timeout 8 gcloud sql connect --project amplified-bee-212211  contextdb --user sbmaster
+	contextdbaddress=$(gcloud sql instances list --project amplified-bee-212211 | grep contextdb | awk '{print $5}')	
+	PGPASSWORD=P0tteryB@rn psql -h $contextdbaddress -U sbmaster
+}
+function contextdbtoothless()
+{
+	timeout 8 gcloud sql connect --project amplified-bee-212211  contextdb --user hiccup
+	contextdbaddress=$(gcloud sql instances list --project amplified-bee-212211 | grep contextdb | awk '{print $5}')	
+	PGPASSWORD="Dent@#l0s$" psql -h $contextdbaddress -U hiccup
+}
+
+#hatchyard connection
+function hatchyard()
+{
+	timeout 8 gcloud sql connect hatchyard
+	hatchyarddbaddress=$(gcloud sql instances list | grep hatchyard | awk '{print $5}')
+	password="Mic#@elLearn\$toR0K"
+	PGPASSWORD=$password psql -h $hatchyarddbaddress -U postgres
+}	
+
+#rangecp copy lines from n1 to n2 from a given file to clipboard
+function rangecp()
+{
+	if [ -f $1 ]
+	then
+		if [ ! -z $3 ]
+		then
+			diff=$(($3 - $2 + 1))
+			#diff=`expr $3 - $2 + 1`
+			tail -n +$2  $1 | head -n $diff | xclip -sel clip
+		elif [ ! -z $2 ]
+		then
+			tail -n +$2  $1 | xclip -sel clip
+		elif [ ! -z $1 ]
+		then
+			xclip -sel clip $1
+		else
+			echo "Provide a range from [n1] lines to [n2] lines"
+		fi
+	else
+		echo "[ $1 ] file doesn't exist"
+	fi
+}

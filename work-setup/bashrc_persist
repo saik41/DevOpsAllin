@@ -1,0 +1,54 @@
+export ROOT=$HOME/work
+
+export HOST_ROOT=$HOME/.cirrodev/home/work
+
+export RDKAFKA_REPO=$ROOT/librdkafka
+export THIRDPARTY_SRC_REPO=$ROOT/thirdparty
+export THIRDPARTY_SRC_ROOT=$ROOT/thirdparty/go
+export NEXUS_CLOUD_PROTO_REPO=$ROOT/nexus-idl
+export CIRRUS_CLOUD_ROOT=$ROOT/cirruscloud
+export NEXUS_CLOUD_COMMON_REPO=$ROOT/nexus-cloud
+export CIRRUS_CLOUD_COMMON_REPO=$ROOT/cirruscloud
+export CIRRUS_TOOLS_REPO=$ROOT/cirrus-tools
+export NEXUS_MOBILE_UI_REPO=$ROOT/mobileui
+
+export NEXUS_SYSTEM_REPO=$ROOT/nexus
+export LEDGER_REPO=$ROOT/ledger
+export NEXUS_UI_REPO=$ROOT/nexus-ui
+export FLUENT_BIT_REPO=$ROOT/fluent-bit
+export FLUENT_BIT_BIN_REPO=$ROOT/fluent-bit-bin
+export NEXUS_BRIDGE_UI_REPO=$ROOT/bridge-ui
+
+export HOST_THIRDPARTY_SRC_REPO=$ROOT/thirdparty
+export HOST_NEXUS_CLOUD_PROTO_REPO=$ROOT/nexus-idl
+export HOST_CITADEL_RUNTIME_ROOT=$ROOT/crt
+
+export NEXUS_IDL_REPO=$ROOT/nexus-idl
+
+# if there is GOPATH then make it Crt if go.mod make it crt
+export CITADEL_RUNTIME_ROOT=$ROOT/crt
+#Warning this is not a repo, see go.mod
+export COMMON_ROOT=$ROOT/common
+export PYCOMMON_ROOT=$ROOT/pycommon
+
+export TOOLCHAIN_REPO=$ROOT/toolchain
+
+#export SURICATA_REPO=$ROOT//suricata
+#export LIBHTP_REPO=$ROOT//libhtp
+
+export SURICATA_REPO=$ROOT/suricata
+export SURICATA_BIN_REPO=$ROOT/suricata-binaries
+export LIBHTP_REPO=$ROOT/libhtp
+export IPERF_REPO=$ROOT/iperf
+export DHCP_REPO=$ROOT/isc-kea-dhcp
+export FLUENTBIT_REPO=$ROOT/fluent-bit
+export BIND_REPO=$ROOT/isc-bind9
+export BIND_BIN_REPO=$ROOT/dns-binaries
+export DB_SRC_HOST_ROOT=$HOST_ROOT/nexus-cloud/database
+
+export WEBROOT_DAEMON_BIN_REPO=$ROOT/webroot-binaries
+export WEBROOT_DAEMON_REPO=$ROOT/webroot
+export PKG_CONFIG_PATH=/home/prince/.cirrodev/opt/cirrus
+export PATH=$PATH:~/vaultBinaries
+export PATH=$PATH:/home/prince/.cirrodev/opt/cirrus/cirro/bin:/home/prince/.cirrodev/opt/cirrus/cirrus-tools/bin:/home/prince/.cirrodev/opt/cirrus:/home/prince/bin
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
